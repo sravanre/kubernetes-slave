@@ -1,0 +1,37 @@
+pipeline {
+    agent {
+        kubernetes {
+            yamlFile "buildpods/pod1.yaml"
+        }
+    }
+
+    stages{
+        stage("checkout") {
+            steps{
+                checkout scm
+            }
+        }
+
+        stage('run the shell on ubuntu'){
+            steps{
+                container('ubuntu') {
+                    sh '''
+                    uptime
+                    hostname
+                    ls -ltr
+                    cat /etc/*release
+                    '''
+                }
+            }
+        }
+
+        stage('run the shared lib function '){
+            steps{
+                container('ubuntu') {
+                  helloWorld("Sravan","Thrusdaay")  
+                    
+                }
+            }
+        }
+    }
+}

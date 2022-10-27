@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: ubuntu
+    image: ubuntu:latest
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace-volume"
+  
+    workingDir: "/home/jenkins/agent"
+  volumes:
+    - emptyDir: {}
+      name: "workspace-volume"
+
