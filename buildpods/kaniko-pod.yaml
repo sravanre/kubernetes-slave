@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: kaniko
+    image: gcr.io/kaniko-project/executor:debug
+    imagePullPolicy: Always
+    command:
+    - sleep
+    args:
+    - 9999999
+    volumeMounts:
+      - name: jenkins-docker-cfg
+        mountPath: /kaniko/.docker
+      - name: "workspace-volume"
+        mountPath: "/home/jenkins/agent"
+    workingDir: "/home/jenkins/agent"
+
+
+  - name: ubuntu
+    image: ubuntu:latest
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+      - name: "workspace-volume"
+        mountPath: "/home/jenkins/agent"
+    workingDir: "/home/jenkins/agent"
+
+  volumes:
+  - name: jenkins-docker-cfg
+    projected:
+      sources:
+      - secret:
+          secretName: sravan-registry-public
+          items:
+            - key: .dockerconfigjson
+              path: config.json
+  - emptyDir: {}
+    name: "workspace-volume"

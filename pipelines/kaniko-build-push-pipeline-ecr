@@ -1,0 +1,50 @@
+@Library('shared-library') _
+
+pipeline {
+    agent {
+        kubernetes {
+            yamlFile "buildpods/kaniko-pod.yaml"
+        }
+    }
+
+    stages{
+        stage("checkout") {
+            steps{
+                checkout scm
+            }
+        }
+
+        stage('run the shell on ubuntu'){
+            steps{
+                container('ubuntu') {
+                    sh '''
+                    uptime
+                    hostname
+                    ls -ltr
+                    cat /etc/*release
+                    '''
+                }
+            }
+        }
+
+        stage('run the shared lib function '){
+            steps{
+                container('ubuntu') {
+                  helloWorld("Sravan","Thrusdaay")  
+                    
+                }
+            }
+        }
+
+        stage('kaniko build and push'){
+            steps{
+                container(name:'kaniko', shell: '/busybox/sh'){
+                    sh '''
+                    #!/busybox/sh
+                    ls -ltr
+                    /kaniko/executor --context=`pwd` --destination=public.ecr.aws/f7j1n6h0/kaniko-build-push:0.0.1
+                }
+            }
+        }
+    }
+}
