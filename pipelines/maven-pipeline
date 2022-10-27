@@ -1,0 +1,26 @@
+pipeline {
+    agent {
+        kubernetes {
+            yamlFile "buildpods/pod.yaml"
+        }
+    }
+
+    stages{
+        stage("checkout") {
+            steps{
+                checkout scm
+            }
+        }
+
+        stage('run the shell on maven'){
+            steps{
+                container('maven0'){
+                    sh '''
+                    uptime
+                    hostname
+                    '''
+                }
+            }
+        }
+    }
+}
