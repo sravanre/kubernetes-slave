@@ -42,6 +42,7 @@ pipeline {
                     sh '''
                     #!/busybox/sh
                     /kaniko/executor --context=`pwd` --destination=public.ecr.aws/f7j1n6h0/kaniko-build-push:0.0.1
+                    '''
                 }
             }
         }
