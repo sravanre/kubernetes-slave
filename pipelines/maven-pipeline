@@ -14,9 +14,8 @@ pipeline {
 
         stage('run the shell on maven'){
             steps{
-                container('maven0'){
-                    sh '''
-                    uptime
+                container('maven'){
+                    sh'''
                     hostname
                     '''
                 }
