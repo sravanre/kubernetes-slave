@@ -15,9 +15,7 @@ pipeline {
         stage('run the shell on maven'){
             steps{
                 container('maven'){
-                    sh'''
-                    hostname
-                    '''
+                    sh 'mvn -version'
                 }
             }
         }
