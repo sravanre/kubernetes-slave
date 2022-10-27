@@ -9,6 +9,9 @@ spec:
       name: "workspace-volume"
   
     workingDir: "/home/jenkins/agent"
+    command:
+    - cat
+    tty: true
   volumes:
     - emptyDir: {}
       name: "workspace-volume"
