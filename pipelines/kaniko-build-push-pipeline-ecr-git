@@ -3,7 +3,7 @@
 pipeline {
     agent {
         kubernetes {
-            yamlFile "buildpods/kaniko-pod.yaml"
+            yamlFile "buildpods/kaniko-pod-git.yaml"
         }
     }
 
@@ -13,7 +13,15 @@ pipeline {
                 checkout scm
             }
         }
-        
+        stage('git clone the python web server '){
+            steps{
+                container('git') {
+                    sh '''
+                    git clone https://github.com/sravanre/python_Webservers.git
+                    '''
+                }
+            }
+        }
 
         stage('run the shell on ubuntu'){
             steps{
