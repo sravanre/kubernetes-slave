@@ -42,7 +42,6 @@ pipeline {
                     uptime
                     hostname
                     ls -ltr
-                    echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                     '''
                 }
             }
@@ -54,7 +53,7 @@ pipeline {
                     sh '''
                     #!/busybox/sh
                     cd python_Webservers
-                    /kaniko/executor --context `pwd` --destination public.ecr.aws/f7j1n6h0/kaniko-build-push:${env.BUILD_ID}
+                    /kaniko/executor --context `pwd` --destination public.ecr.aws/f7j1n6h0/kaniko-build-push:0.0.23
                     '''
                 }
             }
