@@ -21,22 +21,11 @@ pipeline {
                     uptime
                     hostname
                     ls -ltr
-                    pwd
                     cat /etc/*release
                     '''
                 }
             }
         }
-
-        stage('run the shared lib function '){
-            steps{
-                container('ubuntu') {
-                  helloWorld("Sravan","Thrusdaay")  
-                    
-                }
-            }
-        }
-
         stage('run the shell on kaniko'){
             steps{
                 container('kaniko') {
@@ -44,7 +33,6 @@ pipeline {
                     uptime
                     hostname
                     ls -ltr
-                    pwd
                     cat /etc/*release
                     '''
                 }
@@ -58,6 +46,7 @@ pipeline {
                     #!/busybox/sh
                     /kaniko/executor --context `pwd` --destination public.ecr.aws/f7j1n6h0/kaniko-build-push:0.0.1
                     '''
+                }
             }
         }
     }
