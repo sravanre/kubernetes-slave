@@ -33,7 +33,6 @@ pipeline {
                     uptime
                     hostname
                     ls -ltr
-                    cat /etc/*release
                     '''
                 }
             }
