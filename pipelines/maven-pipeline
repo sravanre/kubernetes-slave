@@ -14,8 +14,10 @@ pipeline {
 
         stage('run the shell on maven'){
             steps{
-                container('maven'){
+                container('maven') {
                     sh 'mvn -version'
+                    sh ' echo Hello World > hello.txt'
+                    sh 'ls -last'
                 }
             }
         }
