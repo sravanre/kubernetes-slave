@@ -12,9 +12,6 @@ spec:
           cpu: 1
           memory: "500Mi"
       tty: true
-      env:
-        - name: KUBECONFIG
-          value: "/root/kube-config/config"
       volumeMounts:
         - mountPath: "/home/jenkins/agent"
           name: "workspace-volume"
