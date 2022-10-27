@@ -3,7 +3,7 @@ kind: Pod
 spec:
   containers:
     - name: maven
-      image: 'maven:latest'
+      image: 'maven:alpine'
       resources:
         limits:
           cpu: 1
