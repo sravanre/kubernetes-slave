@@ -14,7 +14,10 @@ pipeline {
     stages{
         stage("checkout") {
             steps{
-                git branch: 'master', url: 'https://github.com/sravanre/kubernetes-slave.git'
+                
+                script{
+                    git.cloneRepoByUrl("https://github.com/sravanre/kubernetes-slave.git")
+                }
             }
         }
         stage('git clone the python web server '){
