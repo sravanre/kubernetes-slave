@@ -57,11 +57,11 @@ pipeline {
         stage('kaniko build and push'){
             steps{
                 container(name:'kaniko', shell: '/busybox/sh'){
-                    sh '''
+                    sh """
                     #!/busybox/sh
                     cd python_Webservers
-                    /kaniko/executor --context `pwd` --destination public.ecr.aws/f7j1n6h0/kaniko-build-push:1.2.2
-                    '''
+                    /kaniko/executor --context `pwd` --destination public.ecr.aws/f7j1n6h0/kaniko-build-push:${env.BUILD_ID}
+                    """
                 }
             }
         }
