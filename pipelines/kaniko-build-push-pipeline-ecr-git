@@ -14,7 +14,7 @@ pipeline {
     stages{
         stage("checkout") {
             steps{
-                checkout scm
+                git branch: 'master', url: 'https://github.com/sravanre/kubernetes-slave.git'
             }
         }
         stage('git clone the python web server '){
@@ -57,7 +57,7 @@ pipeline {
                     sh '''
                     #!/busybox/sh
                     cd python_Webservers
-                    /kaniko/executor --context `pwd` --destination public.ecr.aws/f7j1n6h0/kaniko-build-push:$build_id
+                    /kaniko/executor --context `pwd` --destination public.ecr.aws/f7j1n6h0/kaniko-build-push:${env.BUILD_ID}
                     '''
                 }
             }
