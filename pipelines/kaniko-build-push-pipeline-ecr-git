@@ -57,7 +57,7 @@ pipeline {
                     sh """
                     #!/busybox/sh
                     cd python_Webservers
-                    /kaniko/executor --context `pwd` --destination public.ecr.aws/f7j1n6h0/kaniko-build-push:1223
+                    /kaniko/executor --context `pwd` --destination 551943637039.dkr.ecr.us-east-1.amazonaws.com/sravan-python-webserver:${env.BUILD_ID}
                     """
                 }
             }
