@@ -42,7 +42,7 @@ spec:
     projected:
       sources:
       - secret:
-          name: sravan-registry-public
+          name: sravan-registry-private
           items:
             - key: .dockerconfigjson
               path: config.json
