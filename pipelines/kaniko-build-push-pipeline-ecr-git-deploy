@@ -63,5 +63,18 @@ pipeline {
             }
         }
 
+        stage('deploy to kubernetes the yaml sample app'){
+            steps{
+                container('kubectlContainer'){
+                    withKubeConfig(caCertificate: '', clusterName: 'do-blr1-k8s-1-24-4-do-0-blr1-1666846399726', contextName: 'do-blr1-k8s-1-24-4-do-0-blr1-1666846399726', credentialsId: 'k8-cluster-DigitalOcean', namespace: '', serverUrl: 'https://6574e050-dd87-494a-af99-caaeb5f45a33.k8s.ondigitalocean.com') {
+                    sh 'kubectl get pods'
+                        }
+
+                }
+                
+            }
+        }
+
+
     }
 }

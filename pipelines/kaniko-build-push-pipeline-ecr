@@ -30,12 +30,12 @@ pipeline {
         stage('run the shell on kaniko'){
             steps{
                 container('kaniko') {
-                    sh '''
+                    sh """
                     uptime
                     hostname
                     ls -ltr
                     echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-                    '''
+                    """
                 }
             }
         }
