@@ -14,10 +14,10 @@ pipeline {
     }
 
     stages{
-        stage("checkout") {
-            steps{
-                git credentialsId: 'githubDellToken', url: 'https://github.com/sravanre/kubernetes-slave.git'            }
-        }
+        // stage("checkout") {
+        //     steps{
+        //         git credentialsId: 'githubDellToken', url: 'https://github.com/sravanre/kubernetes-slave.git'            }
+        // }
 
         stage('git clone the python web server '){
             steps{
@@ -59,7 +59,7 @@ pipeline {
                     sh """
                     #!/busybox/sh
                     cd python_Webservers
-                    /kaniko/executor --context `https://github.com/sravanre/python_Webservers.git` --destination rambooreddy/kaniko-python-webserver:V${env.BUILD_ID}
+                    /kaniko/executor --context `pwd` --destination rambooreddy/kaniko-python-webserver:V${env.BUILD_ID}
                     """
                 }
             }
