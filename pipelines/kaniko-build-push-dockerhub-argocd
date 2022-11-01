@@ -13,6 +13,7 @@ pipeline {
     environment {
         build_id = "${env.BUILD_ID}"
         Dockerhub_login = credentials('dockerHubLoginCreds')
+        APP_NAME = "kaniko-python-webserver"
 
     }
 
@@ -62,11 +63,40 @@ pipeline {
                     sh """
                     #!/busybox/sh
                     cd python_Webservers
-                    /kaniko/executor --context `pwd` --destination rambooreddy/kaniko-python-webserver:V${env.BUILD_ID}
+                    /kaniko/executor --context `pwd` --destination rambooreddy/${APP_NAME}:Ver-${env.BUILD_ID}
                     """
                 }
             }
         }
+
+        stage('Updating Kubernetes deployment file'){
+            steps {
+                container('ubuntu') {
+                    sh "cat deployment.yml"
+                    sh "sed -i 's/${APP_NAME}*/${APP_NAME}:Ver-${env.BUILD_ID}/g' deployment.yml"
+                    sh "cat deployment.yml"
+                }
+            }
+        }
+
+        stage('Push the changed deployment file to Git'){
+            steps {
+                container('git'){
+                    script{
+                        sh """
+                        git config --global user.name "sravanre"
+                        git config --global user.email "sravanre@gmail.com"
+                        git add deployment.yml
+                        git commit -m 'Updated the deployment file' """
+                        withCredentials([usernamePassword(credentialsId: 'githubDellToken', passwordVariable: 'pass', usernameVariable: 'user')]) {
+                            sh "git push http://$user:$pass@github.com/sravanre/kubernetes-slave.git master"
+                        }
+                    }
+                }
+            }
+        }
+
+
 
     }
 }
