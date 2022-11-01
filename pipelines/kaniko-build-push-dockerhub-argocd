@@ -1,0 +1,69 @@
+@Library('shared-library') _
+
+pipeline {
+    agent {
+        kubernetes {
+            yamlFile "buildpods/kaniko-pod-git.yaml"
+        }
+    }
+
+    environment {
+        build_id = "${env.BUILD_ID}"
+        Dockerhub_login = credentials('dockerHubLoginCreds')
+
+    }
+
+    stages{
+        stage("checkout") {
+            steps{
+                git credentialsId: 'githubDellToken', url: 'https://github.com/sravanre/kubernetes-slave.git'            }
+        }
+
+        stage('git clone the python web server '){
+            steps{
+                container('git') {
+                    sh '''
+                    git clone https://github.com/sravanre/python_Webservers.git
+                    '''
+                }
+            }
+        }
+
+        stage('run the shell on ubuntu'){
+            steps{
+                container('ubuntu') {
+                    sh '''
+                    uptime
+                    hostname
+                    ls -ltr
+                    cat /etc/*release
+                    '''
+                }
+            }
+        }
+        stage('run the shell on kaniko'){
+            steps{
+                container('kaniko') {
+                    sh '''
+                    uptime
+                    hostname
+                    ls -ltr
+                    '''
+                }
+            }
+        }
+
+        stage('kaniko build and push'){
+            steps{
+                container(name:'kaniko', shell: '/busybox/sh'){
+                    sh """
+                    #!/busybox/sh
+                    cd python_Webservers
+                    /kaniko/executor --context `https://github.com/sravanre/python_Webservers.git` --destination rambooreddy/kaniko-python-webserver:V${env.BUILD_ID}
+                    """
+                }
+            }
+        }
+
+    }
+}
