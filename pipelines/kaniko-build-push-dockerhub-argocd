@@ -6,6 +6,10 @@ pipeline {
             yamlFile "buildpods/kaniko-pod-git.yaml"
         }
     }
+    options{
+        skipDefaultCheckout()
+        ansiColor('xterm')
+    }
 
     environment {
         build_id = "${env.BUILD_ID}"
@@ -14,10 +18,10 @@ pipeline {
     }
 
     stages{
-        // stage("checkout") {
-        //     steps{
-        //         git credentialsId: 'githubDellToken', url: 'https://github.com/sravanre/kubernetes-slave.git'            }
-        // }
+        stage("checkout") {
+            steps{
+                git credentialsId: 'githubDellToken', url: 'https://github.com/sravanre/kubernetes-slave.git'            }
+        }
 
         stage('git clone the python web server '){
             steps{
