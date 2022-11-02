@@ -75,6 +75,7 @@ pipeline {
                     sh "cat deployment.yml"
                     sh "sed -i 's/${APP_NAME}:latest/${APP_NAME}:Ver-${env.BUILD_ID}/g' deployment.yml"
                     sh "cat deployment.yml"
+                    sh "rm -rf python_Webservers"
                 }
             }
         }
@@ -86,13 +87,13 @@ pipeline {
                         sh """
                         ls -ltra
                         cat deployment.yml
-                        // git config --global user.name "sravanre"
-                        // git config --global user.email "sravanre@gmail.com"
-                        // git add deployment.yml
-                        // git commit -m 'Updated the deployment file' """
-                        // withCredentials([usernamePassword(credentialsId: 'githubDellToken', passwordVariable: 'pass', usernameVariable: 'user')]) {
-                        //     sh "git push http://$user:$pass@github.com/sravanre/kubernetes-slave.git master"
-                        // }
+                        git config --global user.name "sravanre"
+                        git config --global user.email "sravanre@gmail.com"
+                        git add deployment.yml
+                        git commit -m 'Updated the deployment file' """
+                        withCredentials([usernamePassword(credentialsId: 'githubDellToken', passwordVariable: 'pass', usernameVariable: 'user')]) {
+                            sh "git push http://$user:$pass@github.com/sravanre/kubernetes-slave.git master"
+                        }
                     }
                 }
             }
