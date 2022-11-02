@@ -84,6 +84,7 @@ pipeline {
                 container('git'){
                     script{
                         sh """
+                        cd /home/jenkins/agent/workspace/envrionment/kaniko-build-push-dockerhub-argocd
                         git config --global user.name "sravanre"
                         git config --global user.email "sravanre@gmail.com"
                         git add deployment.yml
