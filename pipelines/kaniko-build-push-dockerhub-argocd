@@ -84,13 +84,14 @@ pipeline {
                 container('git'){
                     script{
                         sh """
-                        cd /home/jenkins/agent/workspace/envrionment/kaniko-build-push-dockerhub-argocd
-                        git config --global user.name "sravanre"
-                        git config --global user.email "sravanre@gmail.com"
-                        git add deployment.yml
-                        git commit -m 'Updated the deployment file' """
-                        withCredentials([usernamePassword(credentialsId: 'githubDellToken', passwordVariable: 'pass', usernameVariable: 'user')]) {
-                            sh "git push http://$user:$pass@github.com/sravanre/kubernetes-slave.git master"
+                        ls -ltr
+                        cat deployment.yml
+                        // git config --global user.name "sravanre"
+                        // git config --global user.email "sravanre@gmail.com"
+                        // git add deployment.yml
+                        // git commit -m 'Updated the deployment file' """
+                        // withCredentials([usernamePassword(credentialsId: 'githubDellToken', passwordVariable: 'pass', usernameVariable: 'user')]) {
+                        //     sh "git push http://$user:$pass@github.com/sravanre/kubernetes-slave.git master"
                         }
                     }
                 }
