@@ -92,7 +92,7 @@ pipeline {
                         // git commit -m 'Updated the deployment file' """
                         // withCredentials([usernamePassword(credentialsId: 'githubDellToken', passwordVariable: 'pass', usernameVariable: 'user')]) {
                         //     sh "git push http://$user:$pass@github.com/sravanre/kubernetes-slave.git master"
-                        }
+                        // }
                     }
                 }
             }
