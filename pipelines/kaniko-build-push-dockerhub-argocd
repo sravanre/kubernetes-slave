@@ -20,7 +20,7 @@ pipeline {
     stages{
         stage("checkout") {
             steps{
-                git credentialsId: 'githubDellToken', url: 'https://github.com/sravanre/kubernetes-slave.git'            }
+                git credentialsId: 'github-sravan-token', url: 'https://github.com/sravanre/kubernetes-slave.git'            }
         }
 
         stage('git clone the python web server '){
@@ -89,9 +89,10 @@ pipeline {
                         cat deployment.yml
                         git config --global user.name "sravanre"
                         git config --global user.email "sravanre@gmail.com"
+                        git config --global --add safe.directory /home/jenkins/agent/workspace/envrionment/kaniko-build-push-dockerhub-argocd
                         git add deployment.yml
                         git commit -m 'Updated the deployment file' """
-                        withCredentials([usernamePassword(credentialsId: 'githubDellToken', passwordVariable: 'pass', usernameVariable: 'user')]) {
+                        withCredentials([usernamePassword(credentialsId: 'github-sravan-token', passwordVariable: 'pass', usernameVariable: 'user')]) {
                             sh "git push http://$user:$pass@github.com/sravanre/kubernetes-slave.git master"
                         }
                     }
