@@ -84,7 +84,7 @@ pipeline {
                 container('git'){
                     script{
                         sh """
-                        ls -ltr
+                        ls -ltra
                         cat deployment.yml
                         // git config --global user.name "sravanre"
                         // git config --global user.email "sravanre@gmail.com"
