@@ -73,7 +73,7 @@ pipeline {
             steps {
                 container('ubuntu') {
                     sh "cat deployment.yml"
-                    sh "sed -i 's/${APP_NAME}*/${APP_NAME}:Ver-${env.BUILD_ID}/g' deployment.yml"
+                    sh "sed -i 's/rambooreddy\/${APP_NAME}*/rambooreddy\/${APP_NAME}:Ver-${env.BUILD_ID}/g' deployment.yml"
                     sh "cat deployment.yml"
                 }
             }
