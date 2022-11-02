@@ -18,7 +18,7 @@ spec:
         app: python-webserver
     spec:
       containers:
-      - image: rambooreddy/kaniko-python-webserver:Ver-7
+      - image: rambooreddy/kaniko-python-webserver:latest
         name: python-webserver
         resources: {}
 status: {}
